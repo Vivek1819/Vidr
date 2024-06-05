@@ -92,12 +92,32 @@ export const sub =async(req,res,next)=>{
     try{
         const user= await User.findById(req.user.id)
         const subscribedChannels=user.subscribedUsers
-        const list=Promoise.all(
+        const list=await Promise.all(
             subscribedChannels.map(channelId=>{
                 return Video.find({userId:channelId})
             })
         )
-        res.status(200).json(list)
+        res.status(200).json(list.flat())
+    }catch(err){
+next(err)
+}
+}
+
+export const getByTag =async(req,res,next)=>{
+    const tags=req.query.tags.split(",")  
+    try{
+        const video = await Video.find({tags:{$in:tags}}).limit(20)
+            res.status(200).json(video)
+    }catch(err){
+next(err)
+}
+}
+
+export const search =async(req,res,next)=>{
+    const query= req.query.q
+    try{
+        const video = await Video.find({title:{$regex:query,$options:"i"}}).limit(40) //sorts by most viewed videos first
+            res.status(200).json(video)
     }catch(err){
 next(err)
 }
