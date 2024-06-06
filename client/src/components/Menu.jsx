@@ -20,9 +20,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Container= styled.div`
 flex:1;
-background-color:#202020;
+background-color:${({theme})=>theme.bg};
 height:100vh;
-color:white;
+color:${({theme})=>theme.text};
 font-size:15px;
 position:sticky;
 top:0;
@@ -54,11 +54,11 @@ padding:5px 0px;
 
 const Hr=styled.div`
 margin:15px 0px;
-border: 0.5px solid #373737;
+border: 0.5px solid ${({theme})=>theme.soft};
 `
 
 const Login=styled.div`
-padding:15px 0px;
+padding:5px 0px;
 font-size:16px;
 `
 const Button=styled.button`
@@ -73,8 +73,14 @@ display:flex;
 align-items:center;
 gap:5px;
 `
+const Title=styled.h2`
+font-size:15px;
+font-weight:500;
+color:#aaaaaa;
+margin-bottom:20px;
+`
 
-export default function Menu(){
+export default function Menu({darkMode,setDarkMode}){
     return(
         <Container>
             <Wrapper>
@@ -104,6 +110,8 @@ export default function Menu(){
                     <br/ >
                     <Button> <AccountCircleIcon/>SIGN IN</Button>
                 </Login>
+                <Hr/>
+                <Title>Best of YouTube</Title>
                 <Item>
                     <LibraryMusicIcon />Music
                 </Item>
@@ -132,7 +140,7 @@ export default function Menu(){
                 <Item>
                     <HelpOutlineIcon/>Help
                 </Item>
-                <Item>
+                <Item onClick={()=>setDarkMode(prevDarkMode => !prevDarkMode)}>
                     <SettingsBrightnessIcon/>Light Mode
                 </Item>
                 
