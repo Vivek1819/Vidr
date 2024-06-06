@@ -74,7 +74,7 @@ export const like=async (req,res,next)=>{
     const videoId = req.params.videoId
     try{
         await Video.findByIdAndUpdate(videoId,{
-            $addToSet:{likes:id},
+            $addToSet:{likes:id}, 
             $pull:{dislikes:id}
         })
         res.status(200).json("Video liked")
