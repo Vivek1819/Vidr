@@ -17,6 +17,8 @@ import FlagIcon from '@mui/icons-material/Flag';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from "react-router-dom";
+import SignIn from "../pages/SignIn";
 
 
 const Container= styled.div`
@@ -50,7 +52,11 @@ display:flex;
 align-items:center;
 gap:20px;
 cursor:pointer;
-padding:5px 0px;
+padding:5px 10px;
+
+&:hover{
+background-color:${({theme})=>theme.soft};
+}
 `
 
 const Hr=styled.div`
@@ -85,6 +91,7 @@ export default function Menu({darkMode,setDarkMode}){
     return(
         <Container>
             <Wrapper>
+            <Link to="/" style={{textDecoration:'none',color:'inherit'}}>
                 <Logo>
                     <Img src={YouTube}/>
                     YouTube
@@ -108,8 +115,10 @@ export default function Menu({darkMode,setDarkMode}){
                 <Hr/>
                 <Login>
                     Sign in to like videos,comments and subscribe.
+                    <Link to="signin" style={{textDecoration:"none"}}>
                     <br/ >
                     <Button> <AccountCircleIcon/>SIGN IN</Button>
+                    </Link>
                 </Login>
                 <Hr/>
                 <Title>Best of YouTube</Title>
@@ -142,10 +151,11 @@ export default function Menu({darkMode,setDarkMode}){
                     <HelpOutlineIcon/>Help
                 </Item>
                 <Item onClick={()=>setDarkMode(prevDarkMode => !prevDarkMode)}>
-                    <SettingsBrightnessIcon/>Light Mode
+                    <SettingsBrightnessIcon/>{darkMode ? "Light" : "Dark"} Mode
                 </Item>
-                
+                </Link>
             </Wrapper>
+
         </Container>
     )
 }
