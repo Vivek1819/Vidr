@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import grandCanyonImage from '../img/grand_canyon.jpg';
 import {Link} from "react-router-dom";
+import {format} from "timeago.js"
+import axios from "axios"
 
 
 const Container=styled.div`
@@ -10,11 +12,11 @@ width:${(props)=>props.type === "sm" && "360px"};
 margin-bottom:${(props)=>props.type === "sm" ? "10px" : "45px"};
 cursor:pointer;
 display:${(props)=>props.type === "sm" && "flex"};
-gap:10px;
+gap:5px;
 `
 
 const Image=styled.img`
-width:100%;
+width:120%;
 height:${(props)=>props.type === "sm" ? "150px" : "202px"};
 background-color:#999;
 flex:1;
@@ -55,17 +57,28 @@ font-size:14px;
 color:${({theme})=>theme.textSoft};
 `
 
-export default function Card({type}){
+export default function Card({type,video}){
+
+    const [channel,setChannel]=React.useState({})
+
+    React.useEffect(()=>{
+        const fetchChannel=async()=>{
+            await axios.get(`/users/find/${video.userId}`)
+            .then((res)=>console.log(res.data))
+        }
+        fetchChannel()
+    },[video.userId])
+
     return(
         <Link to="/video/test" style={{textDecoration:"none"}}>
         <Container type={type}>
-            <Image type={type} src={grandCanyonImage}/>
+            <Image type={type} src={video.imgURL}/>
             <Details type={type}>
-                <ChannelImage type={type} src={grandCanyonImage}/>
+                <ChannelImage type={type} src={channel.image}/>
                 <Texts>
-                    <Title>Test Video</Title>
-                    <ChannelName>YouDev</ChannelName>
-                    <Info>660,908 Views • 1 Day Ago</Info>
+                    <Title>{video.title}</Title>
+                    <ChannelName>{channel.name}</ChannelName>
+                    <Info>{video.views} views • {format(video.createdAt)}</Info>
                 </Texts>
             </Details>
         </Container>

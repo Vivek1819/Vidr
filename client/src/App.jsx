@@ -32,11 +32,13 @@ const Wrapper=styled.div`
       <Main>
         <Navbar />
         <Wrapper>
-          <Routes>
-            <Route index path="/" element={<Home />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="video/:id" element={<Video />} />
-          </Routes>
+        <Routes>
+        <Route path="/" element={<Home type="random" />} />
+        <Route path="/trends" element={<Home type="trend" />} />
+        <Route path="/subscriptions" element={<Home type="sub" />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/video/:id" element={<Video />} />
+      </Routes>
         </Wrapper>
       </Main>
       </BrowserRouter>
