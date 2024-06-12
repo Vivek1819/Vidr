@@ -16,8 +16,8 @@ export default function Home({ type }) {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                await axios.get(`http://localhost:3000/api/videos/${type}`)
-                .then((res)=>setVideos(res.data))
+                const res=await axios.get(`http://localhost:3000/api/videos/${type}`)
+                setVideos(res.data)
             } catch (error) {
                 console.error(error);
             }
