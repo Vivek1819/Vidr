@@ -19,6 +19,7 @@ import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import SignIn from "../pages/SignIn";
+import { useSelector } from "react-redux";
 
 
 const Container= styled.div`
@@ -88,6 +89,8 @@ margin-bottom:20px;
 `
 
 export default function Menu({darkMode,setDarkMode}){
+
+    const {currentUser}=useSelector(state=>state.user)
     return(
         <Container>
             <Wrapper>
@@ -117,14 +120,14 @@ export default function Menu({darkMode,setDarkMode}){
                     <HistoryIcon />History
                 </Item>    
                 <Hr/>
-                <Login>
+                {!currentUser && <><Login>
                     Sign in to like videos,comments and subscribe.
                     <Link to="signin" style={{textDecoration:"none"}}>
                     <br/ >
                     <Button> <AccountCircleIcon/>SIGN IN</Button>
                     </Link>
                 </Login>
-                <Hr/>
+                <Hr/></>}
                 <Title>Best of YouTube</Title>
                 <Item>
                     <LibraryMusicIcon />Music

@@ -62,15 +62,16 @@ export default function Card({type,video}){
     const [channel,setChannel]=React.useState({})
 
     React.useEffect(()=>{
-        const fetchChannel=async()=>{
-            await axios.get(`/users/find/${video.userId}`)
-            .then((res)=>console.log(res.data))
+        const fetchChannel = async () => {
+            const token = 'your_token_here'; // replace with your actual token
+            await axios.get(`http://localhost:3000/api/users/find/${video.userId}`)
+            .then(res => console.log(res.data))        
         }
         fetchChannel()
     },[video.userId])
 
     return(
-        <Link to="/video/test" style={{textDecoration:"none"}}>
+        <Link to={`http://localhost:3000/api/video/${video._id}`} style={{textDecoration:"none"}}>
         <Container type={type}>
             <Image type={type} src={video.imgURL}/>
             <Details type={type}>

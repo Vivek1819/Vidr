@@ -80,9 +80,11 @@ export default function SignIn(){
         dispatch(loginStart())
         try {
             await axios.post("http://localhost:3000/api/auth/signin", { name, password })
-            .then((res)=>dispatch(loginSuccess(res.data)))
+            .then((res)=>{
+                dispatch(loginSuccess(res.data))
+            })
         } catch (err) {
-            dispatch(loginFailure())
+            console.log(err)
         }
     }
     return(
