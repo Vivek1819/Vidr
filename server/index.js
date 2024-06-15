@@ -27,6 +27,11 @@ app.use("/api/users",userRoutes)
 app.use("/api/videos",videoRoutes)
 app.use("/api/comments",commentRoutes)
 
+app.use((req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    next();
+});
+
 app.use((err,req,res,next)=>{
     const status=err.status || 500;
     const msg= err.message || "Something went wrong"
