@@ -31,6 +31,8 @@ export const signin= async (req,res,next)=>{
             const token = jwt.sign({id:user._id},process.env.JWT_SECRET)
             const {password, ...others}=user._doc
 
+            // localStorage.setItem("access_token", token)
+
             res.cookie("access_token", token, {
                 httpOnly: true
             }).status(200)

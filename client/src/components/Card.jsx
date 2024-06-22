@@ -61,10 +61,13 @@ export default function Card({type,video}){
 
     const [channel,setChannel]=React.useState({})
 
+
     React.useEffect(()=>{
         const fetchChannel = async () => {
-            const token = 'your_token_here'; // replace with your actual token
-            await axios.get(`/users/find/${video.userId}`)
+
+            await axios.get(`http://localhost:3000/api/users/find/${video.userId}`, {
+                
+        })
             .then(res => console.log(res.data))        
         }
         fetchChannel()
