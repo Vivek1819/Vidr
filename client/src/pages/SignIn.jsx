@@ -2,9 +2,9 @@ import axios from "axios"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
-import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice"
-import {auth,provider} from '../firebase'
-import {signInWithPopup} from "firebase/auth"
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice.js"
+import {auth,provider} from '../firebase.js'
+import {linkWithCredential, signInWithPopup} from "firebase/auth"
 
 const Container = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ export default function SignIn(){
         e.preventDefault();
         dispatch(loginStart())
         try {
-            await axios.post("http://localhost:3000/api/auth/signin", { name, password })
+            await axios.post("http://localhost:3000/api/auth/signin", { name, password }, {withCredentials: true})
             .then((res)=>{
                 dispatch(loginSuccess(res.data))
             })

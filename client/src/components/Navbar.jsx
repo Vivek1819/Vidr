@@ -85,7 +85,7 @@ const {currentUser}=useSelector(state=>state.user)
                 {currentUser ? 
                 <User>
                     <VideoCallIcon />
-                    <Avatar />
+                    <Avatar src={currentUser.image}/>
                      {currentUser.name}
                 </User>
                 : <Link to="signin" style={{textDecoration:"none"}}>

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ShareIcon from '@mui/icons-material/Share';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import GrandCanyonImage from "../img/grand_canyon.jpg"
 import Comments from "../components/Comments";
 import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { fetchStart,fetchSuccess } from "../redux/videoSlice";
+import axios from 'axios';
 
 
 const Container=styled.div`
@@ -105,6 +108,33 @@ cursor:pointer;
 `
 
 export default function Video(){
+
+    const {currentUser}=useSelector((state)=>state.user)
+    const {currentVideo}=useSelector((state)=>state.video)
+    const dispatch=useDispatch()
+
+    const path=useLocation().pathname.split("/")[2]
+    
+    
+    const [channel,setChannel]=React.useState({})
+
+    useEffect(()=>{
+        dispatch(fetchStart())
+        const fetchData =async() =>{
+            try{
+                const videoRes=await axios.get("http://localhost:3000/api/videos/find/"+path)
+                const channelRes= await axios.get("http://localhost:3000/api/users/find/"+videoRes.data.userId)
+                setChannel(channelRes.data)
+                dispatch(fetchSuccess(videoRes.data))
+                console.log(currentVideo)
+            }
+        catch(err){
+            console.log(err)
+        }
+    }
+    fetchData()
+    },[path,dispatch])
+    
     return(
         <Container>
             <Content>
@@ -120,12 +150,12 @@ export default function Video(){
                 </iframe>
 
                 </VideoWrapper>
-                <Title>Test Video</Title>
+                <Title>{currentVideo.title}</Title>
                 <Details>
-                    <Info>7,948,154 Views • Jun 22,2022</Info>
+                    <Info>{currentVideo.views} Views • {format(currentVideo.createdAt)}</Info>
                     <Buttons>
-                        <Button> <ThumbUpIcon/> Like</Button>
-                        <Button> <ThumbDownAltIcon /> Dislike</Button>
+                        <Button> <ThumbUpIcon/> {currentVideo.likes }</Button>
+                        <Button> <ThumbDownAltIcon /> {currentVideo.dislikes }</Button>
                         <Button> <ShareIcon /> Share</Button>
                         <Button> <AddTaskIcon />Save</Button>
                     </Buttons>
@@ -133,12 +163,12 @@ export default function Video(){
                 <Hr />
                 <Channel>
                     <ChannelInfo>
-                        <Image src={GrandCanyonImage} />
+                        <Image src={channel.img} />
                         <ChannelDetail>
-                            <ChannelName>YouDev</ChannelName>
-                            <ChannelCounter>200k Subscribers</ChannelCounter>
+                            <ChannelName>{channel.name}</ChannelName>
+                            <ChannelCounter>{channel.subscribers} Subscribers</ChannelCounter>
                             <Description>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                            {currentVideo.description}
                             </Description>
                         </ChannelDetail>
                         <Subscribe>Subscribe</Subscribe>
@@ -147,17 +177,27 @@ export default function Video(){
                 <Hr />
                 <Comments/>
             </Content>
+            
+            
             <Recommendation>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
+            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
             </Recommendation>
+
+            
+    
         </Container>
     )
 }

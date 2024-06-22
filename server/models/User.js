@@ -11,15 +11,13 @@ const userSchema= new mongoose.Schema({
         unique:true
     },
     password:{
-        type:String,
-        required:true,
-        unique:true
+        type:String
     },
     image:{
         type:String
     },
     subscribers:{
-        type:Number ,
+        type:Number,
         default:0
     },
     subscribedUsers:{

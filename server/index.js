@@ -19,7 +19,12 @@ const connect=()=>{
     })
 }
 
-app.use(cors())
+const corsOptions = {
+    origin: 'http://localhost:5173', // Set to your client's origin
+    credentials: true, // To accept cookies/credentials
+  };
+
+app.use(cors(corsOptions));
 app.use(cookieParser())
 app.use(express.json())
 app.use("/api/auth",authRoutes)
