@@ -7,10 +7,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import Video from "./pages/Video"
 import SignIn from "./pages/SignIn"
+import { createGlobalStyle } from 'styled-components';
+
 
 const Container = styled.div`
 display:flex;
 `
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
 
 const Main = styled.div`
 flex:7;
@@ -26,6 +36,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <GlobalStyle />
       <Container>
         <BrowserRouter>
           <Menu darkMode={darkMode} setDarkMode={setDarkMode} />

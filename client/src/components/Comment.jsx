@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useEffect,useState } from "react"
 import styled from "styled-components"
+import axios from 'axios';
 import grandCanyonImage from '../img/grand_canyon.jpg';
 
 const Container=styled.div`
@@ -36,14 +37,26 @@ const Text=styled.span`
 font-size:14px;
 color:${({theme})=>theme.text};`
 
-export default function Comment(){
+export default function Comment(comment){
+
+    const [channel,setChannel]=useState([]);
+
+    useEffect(()=>{
+        const fetchComment=async()=>{
+                const res=await axios.get(`http://localhost:3000/api/users/find/${comment.userId}`)
+                setChannel(res.data) 
+        }
+        fetchComment()
+    },[comment.userId])
+
+
     return(
         <Container>
-            <Avatar src={grandCanyonImage}/>
+            <Avatar src={channel.img}/>
             <Details>
                 <Name>John Doe</Name><Date>3 days ago</Date>
                 <Text>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi, praesentium nesciunt recusandae saepe eveniet cupiditate accusantium vero explicabo dolorum repellat dolores, delectus illum facilis doloribus aliquam architecto, quia reiciendis laboriosam?
+                    {comment.desc}
                 </Text>
             </Details>
         </Container>

@@ -212,7 +212,7 @@ export default function Video(){
                     </ChannelInfo>
                 </Channel>
                 <Hr />
-                <Comments/>
+                <Comments videoId={currentVideo._id}/>
                 
             </Content>
             

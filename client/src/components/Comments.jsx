@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import grandCanyonImage from '../img/grand_canyon.jpg';
 import Comment from "./Comment";
+import { useSelector } from "react-redux";
+import axios from 'axios';
 
 const Container=styled.div``
 
@@ -26,18 +28,35 @@ padding:5px;
 width:100%;
  `
 
-export default function Comments(){
+export default function Comments(videoId){
+
+    const currentUser= useSelector(state=> state.user)
+
+    const [comments,setComments]=React.useState([]);
+
+    React.useEffect(()=>{
+        const fetchComments=async()=>{
+            try{
+                const res=await axios.get(`http://localhost:3000/api/comments/${videoId.videoId}`)
+                setChannel(res.data)
+            }catch(err){
+                console.log(err)
+            }   
+        }
+        fetchComments()
+    },[videoId])
+
     return(
         <Container>
             <NewComment>
-                <Avatar src={grandCanyonImage}/>
+                <Avatar src={currentUser.image}/>
                 <Input placeholder="Add a comment"/>
             </NewComment>
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            {
+                comments.map(comment=>{
+                    <Comment key={comment._id} comment={comment}/>
+                })
+            }
         </Container>
     )
 }
