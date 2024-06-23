@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import Upload from "./Upload";
@@ -75,8 +75,9 @@ background-color:#999;
 
 export default function Navbar(){
 const {currentUser}=useSelector(state=>state.user)
-
+const [q,setQ]=useState("")
 const [open,setOpen]= useState(false)
+const navigate= useNavigate()
 
 
     return(
@@ -84,8 +85,10 @@ const [open,setOpen]= useState(false)
         <Container>
             <Wrapper>
                 <Search>
-                    <Input placeholder="Search" />
-                    <SearchIcon/>
+                    <Input placeholder="Search" onChange={e=>{
+                        setQ(e.target.value)
+                    }}/>
+                    <SearchIcon onClick={()=>navigate(`/search?q=${q}`)} />
                 </Search>
 
                 {currentUser ? 

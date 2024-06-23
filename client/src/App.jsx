@@ -8,6 +8,7 @@ import Home from "./pages/Home"
 import Video from "./pages/Video"
 import SignIn from "./pages/SignIn"
 import { createGlobalStyle } from 'styled-components';
+import Search from "./pages/Search"
 
 
 const Container = styled.div`
@@ -49,6 +50,7 @@ function App() {
               <Route path="/subscriptions" element={<Home type="sub" />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/video/:id" element={<Video />} />
+              <Route path="/search" element={<Search />} />
             </Routes>
             </Wrapper>
           </Main>

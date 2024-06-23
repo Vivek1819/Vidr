@@ -15,6 +15,7 @@ import { format } from "timeago.js";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import { subscription } from "../redux/userSlice";
+import Reccomendation from "../components/Reccomendation";
 
 const Container=styled.div`
 display:flex;
@@ -63,9 +64,6 @@ margin:15px 0px;;
 border:0.5px solid ${({theme})=>theme.soft};
 `
 
-const Recommendation=styled.div`
-flex:2;
-`
 const Channel=styled.div`
 
 `
@@ -215,28 +213,9 @@ export default function Video(){
                 <Comments videoId={currentVideo._id}/>
                 
             </Content>
-            
-            
-            
-         <Recommendation>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            <Card type="sm" key={currentVideo._id} video={currentVideo}/>
-            </Recommendation>
 
-
-    
+            <Reccomendation tags={currentVideo.tags}/>
+            
         </Container>
         
     )
